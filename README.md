@@ -1,5 +1,4 @@
 # Diagnóstico de Madurez Digital 2026
-### Servicios y Soluciones IP
 
 ---
 
@@ -237,16 +236,6 @@ curl http://localhost:3000/api/health
 
 ## Notas importantes
 
-- El archivo `.env` **nunca debe subirse a GitHub** — está excluido en `.gitignore`.
 - Si el backend no está disponible cuando un usuario envía el formulario, **los resultados igual se muestran** en pantalla. El error queda solo en consola para no afectar la experiencia del usuario.
 - La tabla `respuestas` se crea automáticamente al arrancar el servidor si no existe.
 - PM2 reinicia la app automáticamente si el proceso cae o si el servidor se reinicia.
-
----
-
-## Contacto
-
-**Servicios y Soluciones IP**
-- Correo: comercialsys@serviciosysolucionesip.com
-- WhatsApp: +57 314 790 8645
-- Web: [serviciosysolucionesip.com](https://serviciosysolucionesip.com)
