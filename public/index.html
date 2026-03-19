@@ -1,0 +1,1348 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Diagnóstico de Madurez Digital 2026 — Servicios y Soluciones IP</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --navy:       #0d1b3e;
+  --navy-mid:   #1a2f5a;
+  --navy-light: #243a6e;
+  --teal:       #2dd4bf;
+  --teal-dark:  #14b8a6;
+  --orange:     #e8700a;
+  --orange-lt:  #f59e0b;
+  --white:      #ffffff;
+  --slate:      #94a3b8;
+  --slate-lt:   #cbd5e1;
+  --bg:         #f0f4fb;
+  --card:       #ffffff;
+  --border:     #dde4f0;
+  --text:       #0d1b3e;
+  --text-muted: #5a6a8a;
+}
+*, *::before, *::after { box-sizing: border-box; margin:0; padding:0; }
+html { scroll-behavior: smooth; }
+body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); line-height:1.6; }
+h1,h2,h3,h4 { font-family: 'Syne', sans-serif; }
+
+/* ═══════════ HEADER ═══════════ */
+.site-header {
+  background: var(--navy);
+  padding: 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+}
+.header-inner {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 14px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.logo-wrap img { height: 44px; object-fit: contain; }
+.header-badge {
+  background: linear-gradient(135deg, var(--teal), #0891b2);
+  color: var(--navy);
+  font-family: 'Syne', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 6px 14px;
+  border-radius: 100px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* ═══════════ HERO ═══════════ */
+.hero {
+  background: linear-gradient(160deg, var(--navy) 0%, var(--navy-mid) 50%, #0f2d5a 100%);
+  padding: 70px 24px 60px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content:'';
+  position: absolute;
+  top: -60px; right: -60px;
+  width: 340px; height: 340px;
+  background: radial-gradient(circle, rgba(45,212,191,0.12) 0%, transparent 70%);
+  border-radius: 50%;
+}
+.hero::after {
+  content:'';
+  position: absolute;
+  bottom: -80px; left: -40px;
+  width: 280px; height: 280px;
+  background: radial-gradient(circle, rgba(232,112,10,0.1) 0%, transparent 70%);
+  border-radius: 50%;
+}
+.hero-eyebrow {
+  display: inline-block;
+  color: var(--teal);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  border: 1px solid rgba(45,212,191,0.3);
+  padding: 5px 16px;
+  border-radius: 100px;
+  margin-bottom: 20px;
+}
+.hero h1 {
+  font-size: clamp(28px, 5vw, 48px);
+  font-weight: 800;
+  color: var(--white);
+  line-height: 1.15;
+  max-width: 700px;
+  margin: 0 auto 16px;
+}
+.hero h1 span { color: var(--teal); }
+.hero-sub {
+  font-size: 16px;
+  color: var(--slate-lt);
+  max-width: 580px;
+  margin: 0 auto 36px;
+  line-height: 1.7;
+}
+.hero-meta {
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+.hero-meta-item {
+  text-align: center;
+}
+.hero-meta-num {
+  font-family: 'Syne', sans-serif;
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--teal);
+  display: block;
+}
+.hero-meta-lbl {
+  font-size: 12px;
+  color: var(--slate);
+}
+
+/* ═══════════ LAYOUT ═══════════ */
+.main-wrap {
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 0 20px 80px;
+}
+
+/* ═══════════ SECTION DIVIDER ═══════════ */
+.section-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 48px 0 24px;
+}
+.section-divider-line { flex:1; height:1px; background: var(--border); }
+.section-divider-label {
+  font-family: 'Syne', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+/* ═══════════ STAT CARDS ═══════════ */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 14px;
+  margin: 28px 0;
+}
+.stat-card {
+  background: var(--navy);
+  border-radius: 14px;
+  padding: 20px 18px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.stat-card::before {
+  content:'';
+  position:absolute;
+  top:0; left:0; right:0;
+  height: 3px;
+}
+.stat-card.teal::before  { background: var(--teal); }
+.stat-card.orange::before { background: var(--orange); }
+.stat-card.blue::before  { background: #60a5fa; }
+.stat-card.red::before   { background: #f87171; }
+.stat-num {
+  font-family: 'Syne', sans-serif;
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--white);
+  display: block;
+}
+.stat-card.teal .stat-num  { color: var(--teal); }
+.stat-card.orange .stat-num { color: var(--orange-lt); }
+.stat-card.blue .stat-num  { color: #93c5fd; }
+.stat-card.red .stat-num   { color: #fca5a5; }
+.stat-lbl {
+  font-size: 12px;
+  color: var(--slate);
+  line-height: 1.5;
+  margin-top: 6px;
+  display: block;
+}
+.stat-source {
+  font-size: 10px;
+  color: #4a5568;
+  margin-top: 8px;
+  display: block;
+}
+
+/* ═══════════ CONTEXT BLOCK ═══════════ */
+.context-block {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 28px;
+  margin-bottom: 20px;
+}
+.context-block h3 {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.context-block h3 .icon {
+  width: 28px; height: 28px;
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+.context-block p {
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.75;
+}
+.context-block.accent {
+  background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
+  border-color: rgba(45,212,191,0.2);
+}
+.context-block.accent h3 { color: var(--teal); }
+.context-block.accent p  { color: var(--slate-lt); }
+
+.highlight-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-top: 16px;
+}
+.highlight-item {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 10px;
+  padding: 14px;
+}
+.highlight-item .hi-num {
+  font-family: 'Syne', sans-serif;
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--teal);
+}
+.highlight-item .hi-txt {
+  font-size: 12px;
+  color: var(--slate);
+  line-height: 1.5;
+  margin-top: 4px;
+}
+
+/* ═══════════ FORM AREA ═══════════ */
+.form-progress-wrap { margin: 32px 0 8px; }
+.form-progress-top {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+.form-progress-bar {
+  height: 5px;
+  background: var(--border);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.form-progress-fill {
+  height: 100%;
+  border-radius: 3px;
+  background: linear-gradient(90deg, var(--teal), #0891b2);
+  transition: width 0.4s ease;
+  width: 0%;
+}
+
+.q-section { margin-bottom: 40px; }
+.q-section-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid;
+}
+.q-section-head.s1 { border-color: #378ADD; }
+.q-section-head.s2 { border-color: #639922; }
+.q-section-head.s3 { border-color: #EF9F27; }
+.q-section-head.s4 { border-color: #7F77DD; }
+.q-section-head.s5 { border-color: #D4537E; }
+.q-section-head.s6 { border-color: #D85A30; }
+.q-section-head.s7 { border-color: #1D9E75; }
+
+.q-section-num {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 100px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.s1 .q-section-num { background:#ddeef9; color:#0c447c; }
+.s2 .q-section-num { background:#dff0d0; color:#3b6d11; }
+.s3 .q-section-num { background:#fde9c4; color:#633806; }
+.s4 .q-section-num { background:#e8e6fd; color:#3c3489; }
+.s5 .q-section-num { background:#fbe5ee; color:#72243e; }
+.s6 .q-section-num { background:#fce4da; color:#712b13; }
+.s7 .q-section-num { background:#d8f1e8; color:#085041; }
+
+.q-section-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--navy);
+}
+.q-section-desc {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+  margin-top: 8px;
+  line-height: 1.65;
+}
+.question-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 18px 20px;
+  margin-bottom: 10px;
+  transition: box-shadow 0.2s, border-color 0.2s;
+}
+.question-card:hover { box-shadow: 0 4px 20px rgba(13,27,62,0.08); }
+.q-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+.q-text {
+  font-size: 14px;
+  color: var(--text);
+  line-height: 1.65;
+  margin-bottom: 16px;
+}
+.scale-row {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+}
+.scale-opt {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+}
+.scale-circle {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border);
+  background: var(--bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-muted);
+  transition: all 0.15s ease;
+  cursor: pointer;
+  user-select: none;
+}
+.scale-circle:hover { border-color: var(--navy-light); background: #e8eef8; }
+.scale-lbl {
+  font-size: 9px;
+  color: #b4b2a9;
+  text-align: center;
+  max-width: 50px;
+  line-height: 1.3;
+}
+
+/* ═══════════ IDENTIFICACION ═══════════ */
+.id-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px;
+}
+.id-field label {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  margin-bottom: 5px;
+}
+.id-field input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  transition: border-color 0.2s;
+}
+.id-field input:focus { outline: none; border-color: var(--teal-dark); background: #fff; }
+
+/* ═══════════ SUBMIT ═══════════ */
+.submit-area {
+  text-align: center;
+  padding: 32px 0 16px;
+}
+.submit-btn {
+  background: linear-gradient(135deg, var(--orange), #c45e08);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 15px 48px;
+  font-size: 16px;
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  letter-spacing: 0.02em;
+  box-shadow: 0 4px 20px rgba(232,112,10,0.35);
+}
+.submit-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(232,112,10,0.45); }
+.submit-btn:disabled { opacity:0.6; cursor:not-allowed; transform:none; }
+
+/* ═══════════ RESULTS ═══════════ */
+#result-section { display: none; margin-top: 48px; }
+
+.result-hero {
+  background: linear-gradient(160deg, var(--navy) 0%, var(--navy-mid) 60%, #102244 100%);
+  border-radius: 20px;
+  padding: 40px 28px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+.result-hero::before {
+  content:'';
+  position:absolute; top:-80px; right:-80px;
+  width:300px; height:300px;
+  background: radial-gradient(circle, rgba(45,212,191,0.15) 0%, transparent 70%);
+  border-radius:50%;
+}
+.result-eyebrow { color: var(--teal); font-size:12px; font-weight:700; letter-spacing:0.15em; text-transform:uppercase; margin-bottom:10px; }
+.result-score-big {
+  font-family: 'Syne', sans-serif;
+  font-size: 80px;
+  font-weight: 800;
+  color: var(--white);
+  line-height: 1;
+  position: relative;
+}
+.result-score-big span { color: var(--teal); }
+.result-score-sub { color: var(--slate); font-size: 13px; margin-top: 4px; margin-bottom: 16px; }
+.result-level-badge {
+  display: inline-block;
+  padding: 8px 24px;
+  border-radius: 100px;
+  font-family: 'Syne', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 24px;
+}
+
+.result-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 16px;
+}
+.result-card h3 {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 18px;
+}
+
+.result-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.result-row-name {
+  font-size: 13px;
+  color: var(--text);
+  min-width: 220px;
+}
+.result-bar-track {
+  flex: 1;
+  height: 8px;
+  background: var(--bg);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.result-bar-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 1s ease;
+}
+.result-score-lbl {
+  font-size: 12px;
+  font-weight: 700;
+  min-width: 40px;
+  text-align: right;
+}
+
+/* SVG Chart */
+.chart-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 16px;
+}
+.chart-title { font-size: 14px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px; }
+.chart-sub   { font-size: 12px; color: #b4b2a9; margin-bottom: 16px; }
+
+/* Analysis */
+.analysis-card {
+  background: linear-gradient(160deg, var(--navy) 0%, var(--navy-mid) 100%);
+  border-radius: 16px;
+  padding: 28px;
+  margin-bottom: 16px;
+}
+.analysis-card h3 { color: var(--teal); font-size: 13px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 14px; }
+.analysis-card p  { color: var(--slate-lt); font-size: 14px; line-height: 1.75; margin-bottom: 12px; }
+.analysis-card p:last-child { margin-bottom: 0; }
+.analysis-card strong { color: var(--white); }
+
+/* Recommendations */
+.reco-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 20px;
+  margin-bottom: 10px;
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+.reco-icon {
+  width: 40px; height: 40px;
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+.reco-body h4 { font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
+.reco-body p  { font-size: 13px; color: var(--text-muted); line-height: 1.6; }
+.reco-priority {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 100px;
+  margin-left: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.p-alta   { background: #fee2e2; color: #991b1b; }
+.p-media  { background: #fef3c7; color: #92400e; }
+.p-baja   { background: #d1fae5; color: #065f46; }
+
+/* Training cards */
+.training-section {
+  background: linear-gradient(160deg, var(--navy) 0%, var(--navy-mid) 100%);
+  border-radius: 20px;
+  padding: 32px 24px;
+  margin-bottom: 16px;
+}
+.training-section > h3 {
+  color: var(--teal);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.training-section > p {
+  color: var(--slate);
+  font-size: 12px;
+  margin-bottom: 24px;
+}
+.training-card {
+  background: #0f1f3d;
+  border-radius: 12px;
+  padding: 16px 18px;
+  margin-bottom: 10px;
+  position: relative;
+}
+.training-card .badge {
+  position: absolute;
+  top: -9px; right: 12px;
+  font-size: 9px;
+  font-weight: 800;
+  padding: 3px 10px;
+  border-radius: 100px;
+}
+.badge-popular { background: var(--orange); color:#fff; }
+.badge-valor   { background: var(--orange-lt); color:#0a0a0a; }
+.training-level {
+  color: var(--orange);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  margin-bottom: 4px;
+}
+.training-name {
+  color: var(--white);
+  font-family: 'Syne', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+.training-desc { color: var(--slate); font-size: 12px; margin-bottom: 6px; line-height:1.5; }
+.training-tags { color: #4a5568; font-size: 11px; margin-bottom: 12px; line-height:1.5; }
+.training-cta {
+  display: inline-block;
+  padding: 9px 18px;
+  background: var(--orange);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 800;
+  text-decoration: none;
+  border-radius: 8px;
+  transition: opacity 0.15s;
+  font-family: 'Syne', sans-serif;
+}
+.training-cta:hover { opacity:0.85; }
+
+/* Contact */
+.contact-section {
+  background: var(--navy);
+  border-radius: 16px;
+  padding: 28px 24px;
+  margin-top: 16px;
+}
+.contact-section h3 {
+  color: var(--teal);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+.contact-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #0f1f3d;
+  border-radius: 10px;
+  padding: 14px 16px;
+  text-decoration: none;
+  margin-bottom: 8px;
+  transition: background 0.15s;
+}
+.contact-link:hover { background: #172848; }
+.contact-link .c-icon { font-size: 20px; }
+.contact-link .c-label { color: var(--orange); font-size: 13px; font-weight: 600; }
+.contact-link .c-detail { color: var(--slate); font-size: 12px; margin-top: 2px; }
+
+/* ═══════════ FOOTER ═══════════ */
+.site-footer {
+  background: var(--navy);
+  padding: 40px 24px 24px;
+  margin-top: 80px;
+}
+.footer-inner {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+.footer-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 32px;
+  flex-wrap: wrap;
+  margin-bottom: 32px;
+  padding-bottom: 32px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.footer-brand img { height: 40px; object-fit: contain; margin-bottom: 10px; }
+.footer-brand p { color: var(--slate); font-size: 13px; max-width: 260px; line-height: 1.65; }
+.footer-col h4 { color: var(--teal); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 12px; }
+.footer-col a  { display: block; color: var(--slate); font-size: 13px; text-decoration: none; margin-bottom: 8px; transition: color 0.15s; }
+.footer-col a:hover { color: var(--white); }
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.footer-copy { color: #4a5568; font-size: 12px; }
+.footer-tagline { color: var(--teal); font-size: 12px; font-weight: 600; }
+
+/* ═══════════ RESPONSIVE ═══════════ */
+@media (max-width: 600px) {
+  .hero { padding: 48px 16px 40px; }
+  .id-grid { grid-template-columns: 1fr; }
+  .highlight-row { grid-template-columns: 1fr; }
+  .result-row-name { min-width: 140px; font-size: 12px; }
+  .footer-top { flex-direction: column; }
+  .hero-meta { gap: 20px; }
+  .scale-circle { width: 32px; height: 32px; font-size: 12px; }
+}
+
+/* Animations */
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(20px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+.anim { animation: fadeUp 0.5s ease both; }
+</style>
+</head>
+<body>
+
+<!-- ═══════════ STICKY HEADER ═══════════ -->
+<header class="site-header">
+  <div class="header-inner">
+    <div class="logo-wrap">
+      <img src="https://serviciosysolucionesip.com/wp-content/uploads/2024/03/logo-02.png-1.webp" alt="Servicios y Soluciones IP" onerror="this.style.display='none'; this.parentElement.innerHTML='<span style=\'font-family:Syne,sans-serif;color:#2dd4bf;font-weight:800;font-size:18px;\'>Servicios y Soluciones IP</span>'"/>
+    </div>
+    <span class="header-badge">Diagnóstico 2026</span>
+  </div>
+</header>
+
+<!-- ═══════════ HERO ═══════════ -->
+<section class="hero">
+  <div class="hero-eyebrow">Herramienta de autodiagnóstico gratuita</div>
+  <h1>¿Qué tan madura es tu empresa <span>digitalmente</span> en 2026?</h1>
+  <p class="hero-sub">Responde 35 preguntas y obtén un diagnóstico detallado con tu posición frente al mercado, recomendaciones priorizadas y un plan de acción concreto.</p>
+  <div class="hero-meta">
+    <div class="hero-meta-item">
+      <span class="hero-meta-num">35</span>
+      <span class="hero-meta-lbl">Preguntas</span>
+    </div>
+    <div class="hero-meta-item">
+      <span class="hero-meta-num">7</span>
+      <span class="hero-meta-lbl">Dimensiones</span>
+    </div>
+    <div class="hero-meta-item">
+      <span class="hero-meta-num">~8</span>
+      <span class="hero-meta-lbl">Minutos</span>
+    </div>
+    <div class="hero-meta-item">
+      <span class="hero-meta-num">100%</span>
+      <span class="hero-meta-lbl">Gratuito</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ MAIN CONTENT ═══════════ -->
+<div class="main-wrap">
+
+  <!-- CONTEXTO E INTRO -->
+  <div class="section-divider">
+    <div class="section-divider-line"></div>
+    <div class="section-divider-label">Por qué importa</div>
+    <div class="section-divider-line"></div>
+  </div>
+
+  <div class="context-block accent">
+    <h3>La brecha digital ya está costando dinero real</h3>
+    <p>Las empresas que no han avanzado en su transformación digital enfrentan costos operativos hasta un 40% más altos, ciclos de venta más lentos y una pérdida acelerada de talento joven que busca entornos tecnológicamente avanzados. En 2026, no es una ventaja competitiva — es el piso mínimo para sobrevivir.</p>
+    <div class="highlight-row">
+      <div class="highlight-item">
+        <div class="hi-num">$2.4B</div>
+        <div class="hi-txt">Pérdidas anuales por baja productividad digital en LATAM (IDC 2025)</div>
+      </div>
+      <div class="highlight-item">
+        <div class="hi-num">67%</div>
+        <div class="hi-txt">De empresas LATAM están aún en etapas iniciales de transformación digital</div>
+      </div>
+      <div class="highlight-item">
+        <div class="hi-num">3.5×</div>
+        <div class="hi-txt">Más rentables son las empresas líderes digitales vs sus pares rezagadas</div>
+      </div>
+      <div class="highlight-item">
+        <div class="hi-num">18 m</div>
+        <div class="hi-txt">Es el tiempo promedio en que un líder digital de hoy puede quedar rezagado sin actualización continua</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="stats-grid">
+    <div class="stat-card teal">
+      <span class="stat-num">78%</span>
+      <span class="stat-lbl">de CEOs en LATAM dice que la IA es su prioridad #1 en 2026</span>
+      <span class="stat-source">Fuente: McKinsey Global Survey 2025</span>
+    </div>
+    <div class="stat-card orange">
+      <span class="stat-num">41%</span>
+      <span class="stat-lbl">de tareas repetitivas ya pueden automatizarse con herramientas actuales de IA</span>
+      <span class="stat-source">Fuente: WEF Future of Jobs 2025</span>
+    </div>
+    <div class="stat-card blue">
+      <span class="stat-num">$4.4T</span>
+      <span class="stat-lbl">en valor económico potencial podría generar la IA generativa globalmente por año</span>
+      <span class="stat-source">Fuente: McKinsey 2024</span>
+    </div>
+    <div class="stat-card red">
+      <span class="stat-num">52%</span>
+      <span class="stat-lbl">de empresas en Colombia reporta falta de talento digital como su mayor obstáculo</span>
+      <span class="stat-source">Fuente: ANDI – MinTIC 2025</span>
+    </div>
+  </div>
+
+  <div class="context-block">
+    <h3><span class="icon" style="background:#e8f0fe;">🎯</span> ¿Qué mide este diagnóstico?</h3>
+    <p>Evaluamos 7 dimensiones clave de madurez digital: infraestructura y tecnología, presencia digital y marketing, operaciones internas, experiencia del cliente, cultura y formación, estrategia y liderazgo, e integración de sistemas. Cada dimensión refleja áreas donde las empresas líderes se diferencian de las que se quedan atrás. Al finalizar, recibirás un puntaje de 0 a 100, tu posición en la curva de la industria y un plan de acción específico.</p>
+  </div>
+
+  <!-- FORM PROGRESS -->
+  <div class="form-progress-wrap">
+    <div class="form-progress-top">
+      <span id="prog-text">0 de 35 preguntas respondidas</span>
+      <span id="prog-pct">0%</span>
+    </div>
+    <div class="form-progress-bar"><div class="form-progress-fill" id="prog-fill"></div></div>
+  </div>
+
+  <!-- ═══ IDENTIFICACIÓN ═══ -->
+  <div class="section-divider">
+    <div class="section-divider-line"></div>
+    <div class="section-divider-label">Información del respondente</div>
+    <div class="section-divider-line"></div>
+  </div>
+  <div class="question-card" style="margin-bottom:32px;">
+    <div class="q-label">Datos de contacto (opcional)</div>
+    <div class="q-text" style="margin-bottom:14px;">Nos ayuda a personalizar tus resultados y a contactarte si necesitas orientación.</div>
+    <div class="id-grid">
+      <div class="id-field"><label>Nombre</label><input id="campo-nombre" type="text" placeholder="Tu nombre"/></div>
+      <div class="id-field"><label>Empresa</label><input id="campo-empresa" type="text" placeholder="Nombre de la empresa"/></div>
+      <div class="id-field"><label>Cargo</label><input id="campo-cargo" type="text" placeholder="Tu cargo"/></div>
+    </div>
+  </div>
+
+  <!-- ═══ SECCIONES ═══ -->
+  <div id="form-sections"></div>
+
+  <div class="submit-area">
+    <button class="submit-btn" id="submit-btn" onclick="submitForm()">Ver mi diagnóstico completo →</button>
+  </div>
+
+  <!-- ═══ RESULTADOS ═══ -->
+  <div id="result-section">
+
+    <!-- Hero resultado -->
+    <div class="result-hero" id="res-hero">
+      <div class="result-eyebrow">Tu resultado</div>
+      <div class="result-score-big" id="res-score">— <span>/ 100</span></div>
+      <div class="result-score-sub">Puntaje de madurez digital</div>
+      <div class="result-level-badge" id="res-badge"></div>
+      <p id="res-tagline" style="color:var(--slate-lt);font-size:14px;max-width:500px;margin:0 auto;"></p>
+    </div>
+
+    <!-- Barras por sección -->
+    <div class="result-card">
+      <h3>Puntaje por dimensión</h3>
+      <div id="res-bars"></div>
+    </div>
+
+    <!-- Gráfica de mercado -->
+    <div class="chart-card">
+      <div class="chart-title">Tu posición en la curva de la industria</div>
+      <div class="chart-sub">Comparación con organizaciones en LATAM, Norteamérica y Global</div>
+      <svg id="market-chart" width="100%" viewBox="0 0 420 190" xmlns="http://www.w3.org/2000/svg"></svg>
+      <div style="display:flex;gap:20px;flex-wrap:wrap;margin-top:10px;">
+        <div style="display:flex;align-items:center;gap:6px;"><svg width="28" height="8"><line x1="0" y1="4" x2="28" y2="4" stroke="#f59e0b" stroke-width="2" stroke-dasharray="6,3"/></svg><span style="font-size:11px;color:var(--text-muted);">LATAM</span></div>
+        <div style="display:flex;align-items:center;gap:6px;"><svg width="28" height="8"><line x1="0" y1="4" x2="28" y2="4" stroke="#3b82f6" stroke-width="2" stroke-dasharray="8,3"/></svg><span style="font-size:11px;color:var(--text-muted);">Norteamérica</span></div>
+        <div style="display:flex;align-items:center;gap:6px;"><svg width="28" height="8"><line x1="0" y1="4" x2="28" y2="4" stroke="#8b5cf6" stroke-width="2.5"/></svg><span style="font-size:11px;color:var(--text-muted);">Global</span></div>
+        <div style="display:flex;align-items:center;gap:6px;"><svg width="12" height="12"><circle cx="6" cy="6" r="5" fill="#2dd4bf"/></svg><span style="font-size:11px;color:var(--text-muted);">Tu empresa</span></div>
+      </div>
+    </div>
+
+    <!-- Análisis -->
+    <div class="analysis-card" id="res-analysis"></div>
+
+    <!-- Recomendaciones -->
+    <div class="result-card">
+      <h3>Recomendaciones prioritarias</h3>
+      <div id="res-recos"></div>
+    </div>
+
+    <!-- Capacitaciones -->
+    <div class="training-section" id="res-training">
+      <h3>Fortalece tus capacidades</h3>
+      <p>Programas diseñados para cerrar las brechas de madurez en IA detectadas.</p>
+
+      <div class="training-card">
+        <span class="training-level">NIVEL 01 · 8 horas</span>
+        <div class="training-name">Quick Win</div>
+        <div class="training-desc">Adopción inmediata de IA. Tu equipo comienza a usar ChatGPT, Claude y Copilot eficazmente desde el primer día.</div>
+        <div class="training-tags">Dominio de LLM · Prompts efectivos · IA para correos y documentos · Ingeniería básica de prompts · Certificación</div>
+        <a href="https://micrositios.avalpaycenter.com/ss-ip-ma" class="training-cta">$224.672 por persona — Reservar →</a>
+      </div>
+
+      <div class="training-card" style="border:1px solid var(--orange);">
+        <span class="badge badge-valor">MEJOR VALOR</span>
+        <span class="training-level">NIVEL 02 · 12 horas</span>
+        <div class="training-name">Executive</div>
+        <div class="training-desc">IA estratégica para líderes y tomadores de decisión.</div>
+        <div class="training-tags">Prompts avanzados · GPTs personalizados por rol · Decisiones impulsadas por IA · Introducción a automatización · Certificación</div>
+        <a href="https://micrositios.avalpaycenter.com/ss-ip-ma" class="training-cta">$319.872 por persona — Reservar →</a>
+      </div>
+
+      <div class="training-card">
+        <span class="badge badge-popular">★ MÁS POPULAR</span>
+        <span class="training-level">NIVEL 03 · 18 horas</span>
+        <div class="training-name">Intermediate 27X — IA + Datos + Automatización</div>
+        <div class="training-desc">El programa insignia que integra IA, automatización y datos reales del negocio.</div>
+        <div class="training-tags">Automatización con Make/N8N · GPTs por departamento · Análisis de datos con IA · Proyecto real empresarial · Certificación avanzada</div>
+        <a href="https://micrositios.avalpaycenter.com/ss-ip-ma" class="training-cta">$471.240 por persona — Reservar →</a>
+      </div>
+
+      <div class="training-card">
+        <span class="training-level">NIVEL 04 · 40 horas</span>
+        <div class="training-name">Expert 27X — Transformación Total con IA</div>
+        <div class="training-desc">Diseña, implementa y escala soluciones de IA empresariales.</div>
+        <div class="training-tags">APIs e integraciones · Agentes autónomos · Gobierno de IA · Proyecto empresarial · Soporte por 30 días</div>
+        <a href="https://micrositios.avalpaycenter.com/ss-ip-ma" class="training-cta">$1.009.120 por persona — Reservar →</a>
+      </div>
+    </div>
+
+    <!-- Contacto -->
+    <div class="contact-section">
+      <h3>¿Tienes preguntas? Contáctanos</h3>
+      <a href="mailto:comercialsys@serviciosysolucionesip.com" class="contact-link">
+        <span class="c-icon">✉️</span>
+        <div>
+          <div class="c-label">Correo electrónico</div>
+          <div class="c-detail">comercialsys@serviciosysolucionesip.com</div>
+        </div>
+      </a>
+      <a href="https://wa.me/573147908645" class="contact-link">
+        <span class="c-icon">💬</span>
+        <div>
+          <div class="c-label">WhatsApp</div>
+          <div class="c-detail">+57 314 790 8645 — Respuesta en menos de 2 horas</div>
+        </div>
+      </a>
+    </div>
+
+  </div><!-- /result-section -->
+
+</div><!-- /main-wrap -->
+
+<!-- ═══════════ FOOTER ═══════════ -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img src="https://serviciosysolucionesip.com/wp-content/uploads/2024/03/logo-02.png-1.webp" alt="Servicios y Soluciones IP" onerror="this.style.display='none'"/>
+        <p>Transformamos organizaciones a través de la inteligencia artificial, la automatización y el desarrollo de capacidades digitales.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Capacitaciones</h4>
+        <a href="https://micrositios.avalpaycenter.com/ss-ip-ma">Quick Win — Nivel 01</a>
+        <a href="https://micrositios.avalpaycenter.com/ss-ip-ma">Executive — Nivel 02</a>
+        <a href="https://micrositios.avalpaycenter.com/ss-ip-ma">Intermediate 27X — Nivel 03</a>
+        <a href="https://micrositios.avalpaycenter.com/ss-ip-ma">Expert 27X — Nivel 04</a>
+      </div>
+      <div class="footer-col">
+        <h4>Contacto</h4>
+        <a href="mailto:comercialsys@serviciosysolucionesip.com">comercialsys@serviciosysolucionesip.com</a>
+        <a href="https://wa.me/573147908645">WhatsApp: +57 314 790 8645</a>
+        <a href="https://serviciosysolucionesip.com">serviciosysolucionesip.com</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2026 Servicios y Soluciones IP. Todos los derechos reservados.</span>
+      <span class="footer-tagline">Impulsando la transformación digital en LATAM</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+const TOTAL = 35;
+const answers = {};
+
+const sections = [
+  { id:"infra", cls:"s1", num:"Sección 1", title:"Infraestructura y tecnología",    color:"#378ADD",
+    desc:"Evalúa el estado de la infraestructura tecnológica: hardware, software, redes, adopción de nube, seguridad y preparación para IA.",
+    questions:[
+      {lbl:"Capacidad tecnológica",         txt:"Las herramientas digitales que uso en mi trabajo (sistemas internos, plataformas colaborativas, acceso a redes e IA) funcionan de manera confiable y me permiten realizar mis tareas sin interrupciones frecuentes."},
+      {lbl:"Adopción de nube e IA",         txt:"Puedo acceder a la información, documentos, aplicaciones y herramientas de IA que necesito desde cualquier dispositivo o ubicación, sin depender de archivos locales ni de solicitudes a terceros."},
+      {lbl:"Seguridad y gobernanza",        txt:"Confío en que los datos e información con los que trabajo están debidamente protegidos, y existen medidas visibles para prevenir pérdidas, accesos no autorizados, uso indebido de IA o errores involuntarios."},
+      {lbl:"Preparación para IA generativa",txt:"La empresa cuenta con infraestructura, políticas y procesos adecuados para adoptar herramientas de inteligencia artificial generativa de forma segura y responsable."},
+      {lbl:"Continuidad y resiliencia",     txt:"Ante fallas tecnológicas o crisis, la empresa cuenta con planes de continuidad que permiten mantener las operaciones sin afectaciones significativas."},
+    ]},
+  { id:"mkt", cls:"s2", num:"Sección 2", title:"Presencia digital y marketing",    color:"#639922",
+    desc:"Evalúa la presencia online de la empresa, las estrategias de marketing digital y el uso de datos e IA para atraer y retener clientes.",
+    questions:[
+      {lbl:"Presencia digital coherente",  txt:"Si alguien busca información sobre la empresa en internet o redes sociales, la imagen que encuentra es clara, confiable, actualizada y profesional en todos los canales."},
+      {lbl:"Estrategias de marketing",     txt:"Usamos herramientas digitales como redes sociales, publicidad programática, email marketing y contenido generado con IA para atraer clientes y promover nuestros productos o servicios de forma efectiva."},
+      {lbl:"Análisis de datos",            txt:"Las decisiones sobre promociones, contenido o pauta publicitaria se basan en datos concretos, análisis predictivo y segmentación avanzada, no solo en intuición."},
+      {lbl:"Personalización con IA",       txt:"La empresa utiliza inteligencia artificial o automatización para personalizar mensajes, ofertas o comunicaciones según el comportamiento e historial de cada cliente o prospecto."},
+      {lbl:"Medición de impacto digital",  txt:"Contamos con métricas claras (ROI digital, costo por adquisición, engagement) que nos permiten evaluar la efectividad de nuestras acciones de marketing."},
+    ]},
+  { id:"ops", cls:"s3", num:"Sección 3", title:"Operaciones y procesos internos",  color:"#EF9F27",
+    desc:"Evalúa el nivel de automatización, gestión de datos, IA en procesos y calidad de la colaboración interna.",
+    questions:[
+      {lbl:"Automatización inteligente",   txt:"Las tareas repetitivas y administrativas en la empresa se realizan de forma automática o con apoyo de IA, reduciendo el trabajo manual y los errores humanos."},
+      {lbl:"Datos en tiempo real",         txt:"La información sobre ventas, clientes y operaciones está centralizada, actualizada en tiempo real y es fácilmente accesible para la toma de decisiones."},
+      {lbl:"Colaboración digital",         txt:"La comunicación con mi equipo o con otros departamentos es fluida, y contamos con herramientas que facilitan el trabajo colaborativo, incluso en entornos híbridos o remotos."},
+      {lbl:"IA en operaciones",            txt:"La empresa incorpora herramientas de IA (asistentes, análisis predictivo, automatización de flujos) en sus procesos operativos del día a día."},
+      {lbl:"Mejora continua",              txt:"Existen mecanismos para identificar cuellos de botella, medir la eficiencia de los procesos y aplicar mejoras de forma sistemática y basada en datos."},
+    ]},
+  { id:"cx", cls:"s4", num:"Sección 4", title:"Experiencia del cliente",           color:"#7F77DD",
+    desc:"Evalúa la efectividad de los canales digitales, la personalización del servicio, el uso de IA en la atención y la gestión de retroalimentación.",
+    questions:[
+      {lbl:"Canales digitales de atención",txt:"Las empresas con las que trabajamos pueden contactarnos fácilmente a través de canales habituales (correo, chat, WhatsApp) y reciben respuestas en un tiempo razonable."},
+      {lbl:"Continuidad del servicio",     txt:"Cuando un cliente nos contacta de nuevo, ya contamos con su información e historial, lo que permite brindar continuidad sin que tengan que explicar todo desde cero."},
+      {lbl:"Retroalimentación continua",   txt:"Recopilamos activamente comentarios, quejas o sugerencias de los clientes y los usamos de forma sistemática para mejorar nuestros productos, servicios o procesos."},
+      {lbl:"IA y autoservicio",            txt:"La empresa utiliza herramientas de IA (chatbots, asistentes virtuales, portales de autoservicio) para mejorar la experiencia del cliente y reducir tiempos de respuesta."},
+      {lbl:"Visión 360 del cliente",       txt:"Contamos con una visión integrada del cliente que consolida su historial de interacciones, compras y comunicaciones en un solo lugar accesible para el equipo."},
+    ]},
+  { id:"cult", cls:"s5", num:"Sección 5", title:"Cultura digital y formación",     color:"#D4537E",
+    desc:"Evalúa qué tan arraigada está la cultura digital, la inversión en habilidades, la adopción de IA y la apertura a la innovación.",
+    questions:[
+      {lbl:"Cultura de adopción digital",  txt:"Cuando se implementa una nueva herramienta o tecnología, su integración en las tareas del día a día ocurre de forma organizada y sin causar interrupciones significativas."},
+      {lbl:"Formación continua",           txt:"La empresa ofrece recursos, capacitación práctica y acompañamiento para desarrollar habilidades digitales, incluyendo el uso seguro y efectivo de herramientas de IA."},
+      {lbl:"Innovación y adaptabilidad",   txt:"La empresa busca activamente nuevas tecnologías y formas de trabajar para mejorar sus procesos y resultados, y no teme experimentar con enfoques novedosos."},
+      {lbl:"Alfabetización en IA",         txt:"Las personas en la empresa comprenden qué es la inteligencia artificial, sus posibilidades y sus límites, y saben cómo aplicarla de forma crítica y responsable en su trabajo."},
+      {lbl:"Gestión del cambio",           txt:"Existe un proceso claro para gestionar el cambio cuando se adoptan nuevas tecnologías: comunicación oportuna, roles definidos y soporte para quienes necesitan adaptarse."},
+    ]},
+  { id:"strat", cls:"s6", num:"Sección 6", title:"Estrategia y liderazgo digital", color:"#D85A30",
+    desc:"Evalúa la claridad de la visión digital, la inversión en tecnología, el liderazgo en transformación y la integración de IA en la estrategia.",
+    questions:[
+      {lbl:"Visión digital clara",         txt:"Existe un plan de transformación digital claro y definido en la empresa, impulsado por la dirección y comunicado de forma comprensible a todos los niveles."},
+      {lbl:"Inversión en IA",              txt:"La empresa prioriza la inversión en nuevas tecnologías, herramientas digitales e inteligencia artificial para mejorar sus operaciones y mantener su competitividad."},
+      {lbl:"Liderazgo digital",            txt:"Los líderes de la empresa impulsan activamente la digitalización, buscan oportunidades para innovar y sirven como referentes del cambio tecnológico."},
+      {lbl:"Estrategia de datos e IA",     txt:"La empresa tiene una estrategia definida para gestionar, proteger y aprovechar sus datos como activo estratégico, incluyendo el uso responsable de inteligencia artificial."},
+      {lbl:"Alineación digital-negocio",   txt:"Las iniciativas digitales están alineadas con los objetivos del negocio, y existe una medición clara del impacto que generan en los resultados de la empresa."},
+    ]},
+  { id:"int", cls:"s7", num:"Sección 7", title:"Integración y sistemas",           color:"#1D9E75",
+    desc:"Evalúa cómo se integran los sistemas digitales, la adopción de ERP/CRM y la capacidad de los sistemas para escalar e incorporar IA.",
+    questions:[
+      {lbl:"Interoperabilidad",            txt:"Las herramientas digitales que usamos están conectadas entre sí y permiten compartir información sin necesidad de repetir tareas ni transferir datos manualmente entre sistemas."},
+      {lbl:"ERP y CRM",                    txt:"Contamos con sistemas que centralizan la gestión de pedidos, inventario y relaciones con clientes, facilitando las tareas diarias y reduciendo el uso de múltiples herramientas."},
+      {lbl:"Flexibilidad y escalabilidad", txt:"Cuando se requieren cambios o mejoras en los sistemas (nuevas funciones o ajustes), se implementan sin demoras excesivas ni interrupciones al trabajo cotidiano."},
+      {lbl:"IA integrada en sistemas",     txt:"Los sistemas que usamos permiten incorporar o ya incluyen capacidades de inteligencia artificial (análisis predictivo, recomendaciones automáticas, procesamiento de lenguaje natural)."},
+      {lbl:"Calidad y gobierno del dato",  txt:"La información que circula entre los sistemas es confiable, está actualizada y existe un proceso claro para garantizar su calidad, consistencia y trazabilidad."},
+    ]},
+];
+
+// Build form
+function buildForm() {
+  const container = document.getElementById("form-sections");
+  sections.forEach(sec => {
+    const div = document.createElement("div");
+    div.className = "q-section";
+    div.innerHTML = `
+      <div class="q-section-head ${sec.cls}">
+        <span class="q-section-num">${sec.num}</span>
+        <span class="q-section-title">${sec.title}</span>
+      </div>
+      <p class="q-section-desc">${sec.desc}</p>
+    `;
+    sec.questions.forEach((q, qi) => {
+      const qid = `${sec.id}_${qi}`;
+      const card = document.createElement("div");
+      card.className = "question-card";
+      card.innerHTML = `
+        <div class="q-label">${q.lbl}</div>
+        <div class="q-text">${q.txt}</div>
+        <div class="scale-row">
+          ${[1,2,3,4,5].map(v=>`
+            <div class="scale-opt" onclick="selectAnswer('${qid}',${v},'${sec.color}')">
+              <div class="scale-circle" id="btn_${qid}_${v}">${v}</div>
+              <div class="scale-lbl">${v===1?'En desacuerdo':v===5?'De acuerdo':''}</div>
+            </div>
+          `).join('')}
+        </div>
+      `;
+      div.appendChild(card);
+    });
+    container.appendChild(div);
+  });
+}
+
+function selectAnswer(qid, val, color) {
+  for (let v=1;v<=5;v++) {
+    const b = document.getElementById(`btn_${qid}_${v}`);
+    if(!b) continue;
+    b.style.background=''; b.style.borderColor=''; b.style.color=''; b.style.fontWeight='';
+  }
+  const chosen = document.getElementById(`btn_${qid}_${val}`);
+  chosen.style.background = color;
+  chosen.style.borderColor = color;
+  chosen.style.color = '#fff';
+  chosen.style.fontWeight = '700';
+  answers[qid] = val;
+  updateProgress();
+}
+
+function updateProgress() {
+  const answered = Object.keys(answers).length;
+  const pct = Math.round((answered/TOTAL)*100);
+  document.getElementById("prog-fill").style.width = pct+"%";
+  document.getElementById("prog-text").textContent = `${answered} de ${TOTAL} preguntas respondidas`;
+  document.getElementById("prog-pct").textContent = pct+"%";
+}
+
+// ═══ RESULTS ═══
+async function submitForm() {
+  const answered = Object.keys(answers).length;
+  if(answered < TOTAL) { alert(`Faltan ${TOTAL - answered} preguntas por responder.`); return; }
+  const btn = document.getElementById("submit-btn");
+  btn.textContent = "Guardando y calculando..."; btn.disabled = true;
+
+  // Calcula puntajes localmente para mostrar resultados de inmediato
+  let grandTotal = 0;
+  const secScores = {};
+  sections.forEach(sec => {
+    let t = 0;
+    for(let i = 0; i < sec.questions.length; i++) t += answers[`${sec.id}_${i}`] || 0;
+    secScores[sec.id] = t;
+    grandTotal += t;
+  });
+  const maxTotal = TOTAL * 5; // 175
+  const score100 = Math.round((grandTotal / maxTotal) * 100);
+
+  // Envía al backend — si falla no bloquea los resultados
+  try {
+    const res = await fetch("/api/respuestas", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        respondente: document.getElementById("campo-nombre")?.value  || null,
+        empresa:     document.getElementById("campo-empresa")?.value || null,
+        cargo:       document.getElementById("campo-cargo")?.value   || null,
+        answers,
+      }),
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      console.warn("Backend error:", err.error || res.status);
+    }
+  } catch (err) {
+    console.warn("No se pudo guardar en el servidor:", err.message);
+  }
+
+  showResults(score100, secScores);
+}
+
+function getLevel(s) {
+  if(s < 25) return { name:"Etapa Inicial",  emoji:"🔰", bg:"#fee2e2", color:"#991b1b" };
+  if(s < 50) return { name:"En Desarrollo",  emoji:"📈", bg:"#fef3c7", color:"#92400e" };
+  if(s < 75) return { name:"En Camino",       emoji:"🚀", bg:"#ffedd5", color:"#9a3412" };
+  return               { name:"Líder Digital", emoji:"🏆", bg:"#ccfbf1", color:"#065f46" };
+}
+
+function getAnalysis(level, score, secScores) {
+  const nm = level.name;
+  const emoji = level.emoji;
+
+  const weakSec = sections.reduce((a,b) => secScores[a.id] < secScores[b.id] ? a : b);
+  const strongSec = sections.reduce((a,b) => secScores[a.id] > secScores[b.id] ? a : b);
+
+  const texts = {
+    "Etapa Inicial": {
+      title: "Tu organización está en Etapa Inicial — y eso es el punto de partida.",
+      p1: `Con un puntaje de ${score}/100, la empresa tiene una base real para trabajar. La mayoría de organizaciones en LATAM comenzaron exactamente aquí. La diferencia entre quedarse y avanzar es una decisión deliberada de priorizar la digitalización ahora, antes de que la brecha con la competencia se vuelva insalvable.`,
+      p2: `<strong>Tu área más débil:</strong> ${weakSec.title}. Aquí es donde las intervenciones rápidas generan el mayor impacto visible.`,
+      p3: `<strong>Qué sigue:</strong> Focaliza el primer trimestre en automatizar 2-3 procesos repetitivos, adoptar herramientas de colaboración en la nube y capacitar a líderes clave en el uso práctico de IA. Pequeños wins acumulados cambian la cultura.`
+    },
+    "En Desarrollo": {
+      title: "Tu organización está En Desarrollo — con momentum real para acelerar.",
+      p1: `Con ${score}/100, ya tienes iniciativas digitales en marcha. El riesgo en esta etapa no es el punto de partida — es la fragmentación: herramientas sin integrar, equipos con distintos niveles de adopción y proyectos digitales que no se conectan con los objetivos del negocio.`,
+      p2: `<strong>Tu mayor fortaleza:</strong> ${strongSec.title}. Construye sobre lo que ya funciona para generar confianza interna en el proceso.`,
+      p3: `<strong>Qué sigue:</strong> Es el momento de consolidar: integrar sistemas, establecer métricas claras de impacto digital y escalar las prácticas que están funcionando a toda la organización.`
+    },
+    "En Camino": {
+      title: "Tu organización está En Camino — más avanzada que la mayoría en LATAM.",
+      p1: `Con ${score}/100, estás por encima del promedio regional. Los datos y la automatización forman parte de tu operación, y hay una cultura de adopción que facilita el cambio. El desafío ahora es la profundidad: pasar de usar herramientas digitales a construir ventajas competitivas duraderas con IA.`,
+      p2: `<strong>Área de mayor oportunidad:</strong> ${weakSec.title} — aquí es donde aún hay espacio para diferenciarte.`,
+      p3: `<strong>Qué sigue:</strong> Invierte en agentes de IA especializados por área, fortalece el gobierno del dato y documenta el impacto financiero de las iniciativas digitales para mantener el respaldo de la dirección.`
+    },
+    "Líder Digital": {
+      title: "Tu organización es un Líder Digital — por encima de los promedios globales.",
+      p1: `Con ${score}/100, la IA y la automatización están integradas en tus flujos de trabajo, las decisiones se basan en datos y tu equipo tiene una ventaja competitiva clara en tu industria. Esto es excepcional en el contexto LATAM, donde solo el 8% de las empresas alcanza esta categoría.`,
+      p2: `<strong>El riesgo en esta etapa es el estancamiento.</strong> La IA evoluciona rápidamente y los líderes de hoy pueden quedar rezagados en 12-18 meses sin actualización continua del equipo y la arquitectura tecnológica.`,
+      p3: `<strong>Qué sigue:</strong> Agentes de IA autónomos, integraciones avanzadas de APIs, marcos completos de gobernanza de IA y escalar las mejores prácticas en todos los departamentos y geografías. Construiste algo excepcional — ahora hagámoslo imparable.`
+    }
+  };
+  return texts[nm];
+}
+
+function getRecos(secScores) {
+  const sorted = [...sections].sort((a,b) => secScores[a.id] - secScores[b.id]);
+  const recoMap = {
+    infra:  { icon:"🔧", bg:"#ddeef9", title:"Moderniza tu infraestructura tecnológica",  body:"Migra a servicios en la nube, implementa políticas de seguridad claras para IA y establece un plan de continuidad operativa. Una infraestructura sólida es el habilitador de todo lo demás." },
+    mkt:    { icon:"📣", bg:"#dff0d0", title:"Fortalece tu presencia y marketing digital", body:"Audita todos tus canales digitales, implementa analítica avanzada en tus campañas y comienza a personalizar mensajes usando datos de comportamiento. La presencia digital inconsistente erosiona la confianza." },
+    ops:    { icon:"⚙️", bg:"#fde9c4", title:"Automatiza procesos operativos clave",       body:"Identifica las 3-5 tareas más repetitivas de cada área y automatízalas con herramientas como Make o N8N. El ahorro de tiempo libera al equipo para trabajo de mayor valor." },
+    cx:     { icon:"🤝", bg:"#e8e6fd", title:"Mejora la experiencia digital del cliente",  body:"Implementa un CRM unificado, añade un canal de autoservicio y establece protocolos de seguimiento post-venta basados en datos. Los clientes esperan respuestas rápidas y contextualizadas." },
+    cult:   { icon:"🎓", bg:"#fbe5ee", title:"Construye una cultura digital sólida",       body:"Lanza un programa de alfabetización en IA para todo el equipo, celebra los experimentos digitales (incluso los que fallan) y designa champions digitales en cada área." },
+    strat:  { icon:"🎯", bg:"#fce4da", title:"Define y comunica tu estrategia digital",    body:"Documenta un roadmap digital con objetivos medibles a 12, 24 y 36 meses. Asegúrate de que cada área entienda su rol en la transformación y cómo se medirá el éxito." },
+    int:    { icon:"🔗", bg:"#d8f1e8", title:"Integra y conecta tus sistemas",            body:"Mapea todas las herramientas actuales e identifica los puntos de fricción donde los datos no fluyen. Prioriza integraciones que eliminen la captura manual de información." },
+  };
+  const priorities = ["Alta","Alta","Media","Media","Baja","Baja","Baja"];
+  const pClass = ["p-alta","p-alta","p-media","p-media","p-baja","p-baja","p-baja"];
+
+  return sorted.slice(0,5).map((sec,i) => {
+    const r = recoMap[sec.id];
+    return `
+      <div class="reco-card">
+        <div class="reco-icon" style="background:${r.bg}">${r.icon}</div>
+        <div class="reco-body">
+          <h4>${r.title} <span class="reco-priority ${pClass[i]}">${priorities[i]}</span></h4>
+          <p>${r.body}</p>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+function drawMarketChart(score) {
+  const svg = document.getElementById("market-chart");
+  const xFromScore = s => 40 + (s / 100) * 350;
+  const playerX = xFromScore(score);
+
+  svg.innerHTML = `
+    <rect x="40" y="28" width="140" height="122" fill="#fee2e2" opacity="0.45" rx="2"/>
+    <rect x="180" y="28" width="70" height="122" fill="#fef9c3" opacity="0.45" rx="2"/>
+    <rect x="250" y="28" width="70" height="122" fill="#ffedd5" opacity="0.45" rx="2"/>
+    <rect x="320" y="28" width="70" height="122" fill="#ccfbf1" opacity="0.45" rx="2"/>
+
+    <text x="110" y="40" font-size="7" fill="#ef4444" text-anchor="middle" font-weight="700">Etapa Inicial</text>
+    <text x="215" y="40" font-size="7" fill="#ca8a04" text-anchor="middle" font-weight="700">En Desarrollo</text>
+    <text x="285" y="40" font-size="7" fill="#ea580c" text-anchor="middle" font-weight="700">En Camino</text>
+    <text x="355" y="40" font-size="7" fill="#0d9488" text-anchor="middle" font-weight="700">Líder</text>
+
+    <line x1="40" y1="150" x2="395" y2="150" stroke="#e5e7eb" stroke-width="1"/>
+    <line x1="40" y1="28"  x2="40"  y2="150" stroke="#e5e7eb" stroke-width="1"/>
+
+    <text x="40"  y="163" font-size="9" fill="#9ca3af" text-anchor="middle">0</text>
+    <text x="110" y="163" font-size="9" fill="#9ca3af" text-anchor="middle">20</text>
+    <text x="180" y="163" font-size="9" fill="#9ca3af" text-anchor="middle">40</text>
+    <text x="250" y="163" font-size="9" fill="#9ca3af" text-anchor="middle">60</text>
+    <text x="320" y="163" font-size="9" fill="#9ca3af" text-anchor="middle">80</text>
+    <text x="390" y="163" font-size="9" fill="#9ca3af" text-anchor="middle">100</text>
+
+    <path d="M40,148 C60,148 75,145 90,130 C105,115 115,85 130,65 C145,45 155,38 165,40 C175,42 185,55 200,75 C215,95 225,120 240,138 C255,148 270,150 390,150"
+          fill="none" stroke="#f59e0b" stroke-width="2" stroke-dasharray="6,3"/>
+    <path d="M40,150 C70,150 90,148 110,140 C130,130 145,105 160,80 C175,55 185,35 200,28 C215,21 225,28 240,45 C255,62 265,88 280,112 C295,132 310,145 340,150 C360,152 380,150 390,150"
+          fill="none" stroke="#3b82f6" stroke-width="2" stroke-dasharray="8,3"/>
+    <path d="M40,150 C60,150 80,148 100,138 C120,125 135,95 150,68 C165,41 175,22 190,18 C205,14 215,22 230,42 C245,62 258,92 272,118 C286,138 300,148 330,150 C360,152 380,150 390,150"
+          fill="none" stroke="#8b5cf6" stroke-width="2.5"/>
+
+    <line x1="${playerX}" y1="45" x2="${playerX}" y2="148" stroke="#2dd4bf" stroke-width="1.5" stroke-dasharray="4,3"/>
+    <circle cx="${playerX}" cy="148" r="6" fill="#2dd4bf"/>
+    <rect x="${playerX-22}" y="30" width="44" height="16" rx="4" fill="#0d1b3e" stroke="#2dd4bf" stroke-width="1"/>
+    <text x="${playerX}" y="42" font-size="8.5" fill="#2dd4bf" text-anchor="middle" font-weight="700">Tú: ${score}</text>
+  `;
+}
+
+function showResults(score, secScores) {
+  const level = getLevel(score);
+
+  // Hero
+  document.getElementById("res-score").innerHTML = `${score} <span>/ 100</span>`;
+  const badge = document.getElementById("res-badge");
+  badge.textContent = `${level.emoji} ${level.name}`;
+  badge.style.background = level.bg;
+  badge.style.color = level.color;
+
+  const taglines = {
+    "Etapa Inicial":  "Tu organización tiene una base sólida para comenzar su transformación digital.",
+    "En Desarrollo":  "Estás construyendo momentum digital — la clave ahora es integrar y escalar.",
+    "En Camino":      "Estás por encima del promedio de LATAM. El siguiente nivel está al alcance.",
+    "Líder Digital":  "Tu organización está en la élite digital de la región. Ahora hay que mantenerse adelante.",
+  };
+  document.getElementById("res-tagline").textContent = taglines[level.name];
+
+  // Bars
+  const barsDiv = document.getElementById("res-bars");
+  barsDiv.innerHTML = "";
+  sections.forEach(sec => {
+    const t = secScores[sec.id];
+    const max = sec.questions.length * 5;
+    const pct = Math.round((t/max)*100);
+    const row = document.createElement("div");
+    row.className = "result-row";
+    row.innerHTML = `
+      <div class="result-row-name">${sec.title}</div>
+      <div class="result-bar-track">
+        <div class="result-bar-fill" style="width:${pct}%;background:${sec.color};"></div>
+      </div>
+      <div class="result-score-lbl" style="color:${sec.color};">${t}/${max}</div>
+    `;
+    barsDiv.appendChild(row);
+  });
+
+  // Market chart
+  drawMarketChart(score);
+
+  // Analysis
+  const analysis = getAnalysis(level, score, secScores);
+  document.getElementById("res-analysis").innerHTML = `
+    <h3>Análisis General</h3>
+    <p><strong>${analysis.title}</strong></p>
+    <p>${analysis.p1}</p>
+    <p>${analysis.p2}</p>
+    <p>${analysis.p3}</p>
+  `;
+
+  // Recos
+  document.getElementById("res-recos").innerHTML = getRecos(secScores);
+
+  // Show
+  const resSection = document.getElementById("result-section");
+  resSection.style.display = "block";
+  setTimeout(() => resSection.scrollIntoView({ behavior:"smooth", block:"start" }), 100);
+
+  document.getElementById("submit-btn").textContent = "Diagnóstico completado ✓";
+}
+
+buildForm();
+</script>
+</body>
+</html>
