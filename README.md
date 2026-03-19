@@ -59,8 +59,7 @@ madurez-digital/
 │   ├── db.js               ← Conexión y esquema PostgreSQL
 │   └── routes/
 │       └── respuestas.js   ← API REST: guardar, listar, promedios
-├── .env.example            ← Plantilla de variables de entorno
-├── .gitignore              ← Excluye .env y node_modules
+├── .env                    ← Plantilla de variables de entorno
 ├── nginx.conf              ← Configuración de Nginx
 ├── package.json
 ├── setup.sh                ← Script de instalación automática
