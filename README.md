@@ -4,18 +4,9 @@
 
 ## ¿Qué es este proyecto?
 
-Esta es una herramienta web de autodiagnóstico de madurez digital desarrollada para **Servicios y Soluciones IP**. Permite a empresas evaluar su nivel de transformación digital en 7 dimensiones clave, obtener un puntaje de 0 a 100, ver su posición frente al mercado (LATAM, Norteamérica y Global), y recibir recomendaciones priorizadas junto con una oferta de capacitación en IA.
+Herramienta web de autodiagnóstico de madurez digital. Permite a empresas evaluar su nivel de transformación digital en 7 dimensiones clave, obtener un puntaje de 0 a 100, ver su posición frente al mercado (LATAM, Norteamérica y Global), recibir recomendaciones priorizadas y descargar un reporte en PDF.
 
-El proyecto está compuesto por un **frontend HTML estático** servido por Nginx y un **backend Node.js + Express** que recibe y persiste las respuestas en **PostgreSQL**.
-
----
-
-## Propósito
-
-- Generar leads calificados a partir de empresas que completan el diagnóstico
-- Identificar el nivel de madurez digital de clientes potenciales antes de una conversación comercial
-- Posicionar a Servicios y Soluciones IP como referente en transformación digital e IA en LATAM
-- Ofrecer automáticamente los programas de capacitación más relevantes según el resultado del usuario
+El proyecto está compuesto por un **frontend HTML estático** servido por Nginx y un **backend Node.js + Express** que recibe y persiste las respuestas en **PostgreSQL**, y genera PDFs con Puppeteer + Google Chrome.
 
 ---
 
@@ -41,10 +32,12 @@ El resultado se clasifica en 4 niveles: **Etapa Inicial (0–24)**, **En Desarro
 
 - **Frontend:** HTML5 + CSS3 + JavaScript vanilla (sin frameworks)
 - **Backend:** Node.js 20 + Express
-- **Base de datos:** PostgreSQL
-- **Servidor web:** Nginx (proxy inverso)
+- **Base de datos:** PostgreSQL (zona horaria: America/Bogota)
+- **Generación de PDF:** Puppeteer Core + Google Chrome
+- **Servidor web:** Nginx (proxy inverso con SSL)
 - **Proceso manager:** PM2
 - **Infraestructura:** Ubuntu 22.04 / 24.04 en Proxmox
+- **SSL:** Let's Encrypt vía Certbot
 
 ---
 
@@ -53,16 +46,17 @@ El resultado se clasifica en 4 niveles: **Etapa Inicial (0–24)**, **En Desarro
 ```
 madurez-digital/
 ├── public/
-│   └── index.html          ← Cuestionario completo (frontend)
+│   └── index.html              ← Cuestionario completo (frontend)
 ├── src/
-│   ├── server.js           ← Servidor Express principal
-│   ├── db.js               ← Conexión y esquema PostgreSQL
+│   ├── server.js               ← Servidor Express principal
+│   ├── db.js                   ← Conexión y esquema PostgreSQL
 │   └── routes/
-│       └── respuestas.js   ← API REST: guardar, listar, promedios
-├── .env                    ← Plantilla de variables de entorno
-├── nginx.conf              ← Configuración de Nginx
+│       ├── respuestas.js       ← API REST: guardar, listar, promedios
+│       └── pdf.js              ← Generación de PDF con Puppeteer
+├── .env                        ← Plantilla de variables de entorno
+├── nginx.conf                  ← Configuración de Nginx
 ├── package.json
-├── setup.sh                ← Script de instalación automática
+├── setup.sh                    ← Script de instalación automática
 └── README.md
 ```
 
@@ -102,32 +96,8 @@ CORS_ORIGIN=*
 ```bash
 # 3. Ajusta el server_name en nginx.conf con tu IP o dominio
 nano nginx.conf
-# Cambia: server_name tu-dominio.com;
-# Por:    server_name 206.165.108.17;
 
 # 4. Ejecuta el script de instalación
-chmod +x setup.sh
-sudo bash setup.sh
-```
-
-El script instala automáticamente Node.js 20, PostgreSQL, Nginx y PM2, crea la base de datos y el usuario, copia los archivos a sus rutas definitivas y deja todo corriendo como servicio.
-
-Al finalizar verás:
-```
-✅ Conectado a PostgreSQL
-✅ Esquema de base de datos listo
-🚀 Servidor corriendo en http://localhost:3000
-```
-
-El cuestionario queda disponible en `http://206.165.108.17`.
-
----
-
-## Instalacion General
-
-Solo en la consola ejecuta:
-
-```bash
 chmod +x setup.sh
 sudo bash setup.sh
 ```
@@ -136,7 +106,7 @@ sudo bash setup.sh
 
 ## Instalación manual paso a paso
 
-### 1. Instalar dependencias del sistema
+### 1. Dependencias del sistema
 
 ```bash
 sudo apt update && sudo apt upgrade -y
@@ -144,7 +114,15 @@ curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
 sudo apt install -y nodejs nginx postgresql
 ```
 
-### 2. Crear la base de datos
+### 2. Google Chrome (requerido para generación de PDF)
+
+```bash
+wget -P /tmp https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+sudo apt install -y /tmp/google-chrome-stable_current_amd64.deb
+google-chrome --version
+```
+
+### 3. Crear la base de datos
 
 ```bash
 sudo -u postgres psql
@@ -155,10 +133,11 @@ CREATE USER madurez_user WITH ENCRYPTED PASSWORD 'TuContraseñaSegura2026';
 GRANT ALL PRIVILEGES ON DATABASE madurez_digital TO madurez_user;
 \c madurez_digital
 GRANT ALL ON SCHEMA public TO madurez_user;
+ALTER DATABASE madurez_digital SET timezone TO 'America/Bogota';
 \q
 ```
 
-### 3. Copiar archivos y configurar entorno
+### 4. Copiar archivos y configurar entorno
 
 ```bash
 sudo mkdir -p /opt/madurez-digital /var/www/madurez-digital
@@ -167,18 +146,19 @@ sudo cp .env /opt/madurez-digital/.env
 sudo cp public/index.html /var/www/madurez-digital/
 ```
 
-### 4. Instalar dependencias y arrancar con PM2
+### 5. Instalar dependencias Node y arrancar con PM2
 
 ```bash
 cd /opt/madurez-digital
 sudo npm install --omit=dev
+sudo npm install puppeteer-core
 sudo npm install -g pm2
-pm2 start src/server.js --name madurez-digital
+pm2 start src/server.js --name madurez-digital --cwd /opt/madurez-digital
 pm2 startup
 pm2 save
 ```
 
-### 5. Configurar Nginx
+### 6. Configurar Nginx
 
 ```bash
 sudo cp nginx.conf /etc/nginx/sites-available/madurez-digital
@@ -186,6 +166,52 @@ sudo ln -s /etc/nginx/sites-available/madurez-digital /etc/nginx/sites-enabled/
 sudo rm -f /etc/nginx/sites-enabled/default
 sudo nginx -t && sudo systemctl reload nginx
 ```
+
+### 7. Certificado SSL con Certbot
+
+```bash
+sudo apt install -y certbot python3-certbot-nginx
+sudo certbot --nginx -d tu-dominio.com
+```
+
+---
+
+## Configuración de Nginx (con SSL)
+
+```nginx
+server {
+    listen 80;
+    server_name tu-dominio.com;
+    return 301 https://$host$request_uri;
+}
+
+server {
+    listen 443 ssl;
+    server_name tu-dominio.com;
+
+    ssl_certificate     /etc/letsencrypt/live/tu-dominio.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/tu-dominio.com/privkey.pem;
+
+    location /api/ {
+        proxy_pass         http://localhost:3000;
+        proxy_http_version 1.1;
+        proxy_set_header   Upgrade $http_upgrade;
+        proxy_set_header   Connection 'upgrade';
+        proxy_set_header   Host $host;
+        proxy_cache_bypass $http_upgrade;
+        proxy_buffering    off;
+        proxy_read_timeout 120s;
+    }
+
+    location / {
+        root   /var/www/madurez-digital;
+        index  index.html;
+        try_files $uri $uri/ /index.html;
+    }
+}
+```
+
+> **Importante:** `proxy_buffering off` y `proxy_read_timeout 120s` son necesarios para que la generación del PDF no se interrumpa.
 
 ---
 
@@ -196,6 +222,7 @@ sudo nginx -t && sudo systemctl reload nginx
 | `POST` | `/api/respuestas` | Guarda una respuesta completa del cuestionario |
 | `GET`  | `/api/respuestas` | Lista todas las respuestas (uso interno/admin) |
 | `GET`  | `/api/respuestas/promedios` | Promedios globales por sección |
+| `POST` | `/api/pdf` | Genera y descarga el reporte PDF de resultados |
 | `GET`  | `/api/health` | Verifica que el servidor está activo |
 
 ### Ejemplo de payload — POST /api/respuestas
@@ -228,24 +255,39 @@ pm2 status
 # Ver logs en tiempo real
 pm2 logs madurez-digital
 
-# Reiniciar la app (tras cambios)
+# Reiniciar la app tras cambios en el backend
 pm2 restart madurez-digital
+
+# Limpiar logs acumulados
+pm2 flush madurez-digital
 
 # Consultar respuestas guardadas
 sudo -u postgres psql -d madurez_digital \
   -c "SELECT id, respondente, empresa, cargo, fecha FROM respuestas ORDER BY fecha DESC LIMIT 20;"
 
-# Ver promedios por sección
+# Filtrar respuestas por empresa
+sudo -u postgres psql -d madurez_digital \
+  -c "SELECT id, respondente, cargo, fecha FROM respuestas WHERE empresa ILIKE 'nombre_empresa' ORDER BY fecha DESC;"
+
+# Ver promedios globales por sección
 curl http://localhost:3000/api/respuestas/promedios
 
 # Verificar que el servidor responde
 curl http://localhost:3000/api/health
+
+# Eliminar registros de prueba (conservar los primeros N)
+sudo -u postgres psql -d madurez_digital \
+  -c "DELETE FROM respuestas WHERE id NOT IN (SELECT id FROM respuestas ORDER BY id ASC LIMIT 2);"
 ```
 
 ---
 
 ## Notas importantes
 
-- Si el backend no está disponible cuando un usuario envía el formulario, **los resultados igual se muestran** en pantalla. El error queda solo en consola para no afectar la experiencia del usuario.
+- El archivo `.env` **nunca debe subirse a GitHub** — está excluido en `.gitignore`.
+- Si el backend no está disponible al enviar el formulario, **los resultados igual se muestran** en pantalla. El error queda solo en consola.
 - La tabla `respuestas` se crea automáticamente al arrancar el servidor si no existe.
 - PM2 reinicia la app automáticamente si el proceso cae o si el servidor se reinicia.
+- La zona horaria de la base de datos está configurada en `America/Bogota`.
+- El PDF se genera con `puppeteer-core` apuntando a Google Chrome instalado en `/usr/bin/google-chrome`. Si Chrome cambia de ruta, actualizar `executablePath` en `src/routes/pdf.js`.
+- `proxy_buffering off` en Nginx es obligatorio para que el PDF se descargue correctamente.
