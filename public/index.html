@@ -1591,9 +1591,7 @@ async function downloadPDF() {
 }
 
 // ═══ ADMIN PANEL ═══
-const ADMIN_USER = 'admin';
-const ADMIN_PASS = 'Sm4rtM4st3r2025';
-let adminAuthenticated = false;
+let adminToken = null;
 let adminAllRows = [];
 
 const ANSWER_KEYS = [
@@ -1624,7 +1622,7 @@ function getLevelAdmin(s) {
 function openAdminPanel() {
   document.getElementById('admin-overlay').style.display = 'block';
   document.body.style.overflow = 'hidden';
-  if (adminAuthenticated) {
+  if (adminToken) {
     showDashboard();
   } else {
     document.getElementById('admin-login').style.display = 'block';
@@ -1636,8 +1634,11 @@ function openAdminPanel() {
 function closeAdminPanel() {
   document.getElementById('admin-overlay').style.display = 'none';
   document.body.style.overflow = '';
-  // Cierra sesión siempre
-  adminAuthenticated = false;
+  // Invalida el token en el servidor y limpia sesión local
+  if (adminToken) {
+    fetch('/api/admin/logout', { method: 'POST', headers: { 'x-admin-token': adminToken } }).catch(() => {});
+  }
+  adminToken = null;
   adminAllRows = [];
   document.getElementById('admin-user').value = '';
   document.getElementById('admin-pass').value = '';
@@ -1651,18 +1652,40 @@ document.getElementById('admin-overlay').addEventListener('click', function(e) {
   if (e.target === this) closeAdminPanel();
 });
 
-function doAdminLogin() {
+async function doAdminLogin() {
   const u = document.getElementById('admin-user').value.trim();
   const p = document.getElementById('admin-pass').value;
   const err = document.getElementById('admin-login-err');
-  if (u === ADMIN_USER && p === ADMIN_PASS) {
-    err.style.display = 'none';
-    adminAuthenticated = true;
-    showDashboard();
-  } else {
+  const btn = document.querySelector('#admin-login button');
+
+  if (!u || !p) { err.textContent = 'Completa usuario y contraseña.'; err.style.display = 'block'; return; }
+
+  btn.textContent = 'Verificando...';
+  btn.disabled = true;
+
+  try {
+    const res = await fetch('/api/admin/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ user: u, pass: p })
+    });
+    const data = await res.json();
+    if (res.ok && data.ok) {
+      err.style.display = 'none';
+      adminToken = data.token;
+      showDashboard();
+    } else {
+      err.textContent = data.error || 'Usuario o contraseña incorrectos.';
+      err.style.display = 'block';
+      document.getElementById('admin-pass').value = '';
+      document.getElementById('admin-pass').focus();
+    }
+  } catch(e) {
+    err.textContent = 'Error de conexión con el servidor.';
     err.style.display = 'block';
-    document.getElementById('admin-pass').value = '';
-    document.getElementById('admin-pass').focus();
+  } finally {
+    btn.textContent = 'Ingresar';
+    btn.disabled = false;
   }
 }
 
@@ -1681,7 +1704,9 @@ async function loadAdminData() {
   empty.style.display = 'none';
 
   try {
-    const res = await fetch('/api/respuestas');
+    const res = await fetch('/api/admin/respuestas', {
+      headers: { 'x-admin-token': adminToken }
+    });
     if (!res.ok) throw new Error('Error ' + res.status);
     const data = await res.json();
     adminAllRows = Array.isArray(data) ? data : (data.data || data.respuestas || []);
