@@ -25,7 +25,7 @@
 }
 *, *::before, *::after { box-sizing: border-box; margin:0; padding:0; }
 html { scroll-behavior: smooth; }
-body { font-family: Calibri, 'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif; font-size: 16px; background: var(--bg); background-image: radial-gradient(circle at 20% 50%, rgba(232,112,10,0.04) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(13,27,62,0.06) 0%, transparent 50%), radial-gradient(circle at 60% 80%, rgba(45,212,191,0.04) 0%, transparent 40%); color: var(--text); line-height:1.6; }
+body { font-family: Calibri, 'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif; font-size: 16px; background: #e8ecf5; background-image: radial-gradient(circle at 20% 50%, rgba(232,112,10,0.04) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(13,27,62,0.06) 0%, transparent 50%), radial-gradient(circle at 60% 80%, rgba(45,212,191,0.04) 0%, transparent 40%); color: var(--text); line-height:1.6; }
 h1,h2,h3,h4 { font-family: 'Montserrat', sans-serif; }
 
 /* ═══════════ HEADER ═══════════ */
@@ -386,11 +386,12 @@ h1,h2,h3,h4 { font-family: 'Montserrat', sans-serif; }
 }
 .scale-circle:hover { border-color: var(--navy-light); background: #e8eef8; }
 .scale-lbl {
-  font-size: 9px;
-  color: #b4b2a9;
+  font-size: 12px;
+  color: #7a7870;
   text-align: center;
-  max-width: 50px;
+  max-width: 60px;
   line-height: 1.3;
+  font-weight: 600;
 }
 
 /* ═══════════ IDENTIFICACION ═══════════ */
@@ -722,7 +723,18 @@ h1,h2,h3,h4 { font-family: 'Montserrat', sans-serif; }
 .footer-copy { color: #4a5568; font-size: 14px; }
 .footer-tagline { color: var(--teal); font-size: 14px; font-weight: 600; }
 
-/* ═══════════ RESPONSIVE ═══════════ */
+/* ═══════════ STARFIELD CANVAS ═══════════ */
+#starfield-canvas {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
+#starfield-canvas.visible { opacity: 1; }
+.main-wrap { position: relative; z-index: 1; }
 @media (max-width: 600px) {
   .hero { padding: 48px 16px 40px; }
   .id-grid { grid-template-columns: 1fr; }
@@ -803,7 +815,6 @@ h1,h2,h3,h4 { font-family: 'Montserrat', sans-serif; }
         <table id="admin-table" style="width:100%;border-collapse:collapse;font-size:14px;">
           <thead>
             <tr style="background:#f1f5f9;position:sticky;top:0;z-index:2;">
-              <th style="padding:12px 14px;text-align:left;font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em;border-bottom:1px solid var(--border);">ID</th>
               <th style="padding:12px 14px;text-align:left;font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em;border-bottom:1px solid var(--border);">Nombre</th>
               <th style="padding:12px 14px;text-align:left;font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em;border-bottom:1px solid var(--border);">Empresa</th>
               <th style="padding:12px 14px;text-align:left;font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em;border-bottom:1px solid var(--border);">Cargo</th>
@@ -846,6 +857,8 @@ h1,h2,h3,h4 { font-family: 'Montserrat', sans-serif; }
     </div>
   </div>
 </section>
+
+<canvas id="starfield-canvas"></canvas>
 
 <!-- ═══════════ MAIN CONTENT ═══════════ -->
 <div class="main-wrap">
@@ -1623,6 +1636,14 @@ function openAdminPanel() {
 function closeAdminPanel() {
   document.getElementById('admin-overlay').style.display = 'none';
   document.body.style.overflow = '';
+  // Cierra sesión siempre
+  adminAuthenticated = false;
+  adminAllRows = [];
+  document.getElementById('admin-user').value = '';
+  document.getElementById('admin-pass').value = '';
+  document.getElementById('admin-login-err').style.display = 'none';
+  document.getElementById('admin-login').style.display = 'block';
+  document.getElementById('admin-dashboard').style.display = 'none';
 }
 
 // Close on overlay click
@@ -1697,7 +1718,6 @@ function renderAdminTable(rows) {
     tr.onmouseenter = () => tr.style.background = '#f8fafc';
     tr.onmouseleave = () => tr.style.background = '';
     tr.innerHTML = `
-      <td style="padding:12px 14px;color:var(--text-muted);font-size:13px;">#${row.id}</td>
       <td style="padding:12px 14px;font-weight:600;color:var(--navy);">${row.respondente || '—'}</td>
       <td style="padding:12px 14px;color:var(--text);">${row.empresa || '—'}</td>
       <td style="padding:12px 14px;color:var(--text-muted);font-size:13px;">${row.cargo || '—'}</td>
@@ -1763,6 +1783,119 @@ async function downloadAdminPDF(row) {
     btn.disabled = false;
   }
 }
+
+// ═══ STARFIELD BACKGROUND ═══
+(function() {
+  const canvas = document.getElementById('starfield-canvas');
+  const ctx = canvas.getContext('2d');
+  let W, H, particles, mouse = { x: -9999, y: -9999 };
+  const PARTICLE_COUNT = 110;
+  const MAX_DIST = 140;
+  const MOUSE_DIST = 180;
+  const MOUSE_FORCE = 0.012;
+
+  function resize() {
+    W = canvas.width  = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+
+  function Particle() {
+    this.x  = Math.random() * W;
+    this.y  = Math.random() * H;
+    this.vx = (Math.random() - 0.5) * 0.42;
+    this.vy = (Math.random() - 0.5) * 0.42;
+    this.r  = Math.random() * 1.8 + 0.6;
+    this.alpha = Math.random() * 0.5 + 0.35;
+  }
+
+  function init() {
+    resize();
+    particles = Array.from({ length: PARTICLE_COUNT }, () => new Particle());
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+
+    // Draw connections
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const a = particles[i], b = particles[j];
+        const dx = a.x - b.x, dy = a.y - b.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < MAX_DIST) {
+          const opacity = (1 - dist / MAX_DIST) * 0.55;
+          ctx.beginPath();
+          ctx.strokeStyle = `rgba(96,165,250,${opacity})`;
+          ctx.lineWidth = 1.1;
+          ctx.moveTo(a.x, a.y);
+          ctx.lineTo(b.x, b.y);
+          ctx.stroke();
+        }
+      }
+    }
+
+    // Draw particles
+    particles.forEach(p => {
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(147,197,253,${p.alpha})`;
+      ctx.fill();
+    });
+  }
+
+  function update() {
+    particles.forEach(p => {
+      // Mouse repulsion
+      const dx = p.x - mouse.x, dy = p.y - mouse.y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist < MOUSE_DIST && dist > 0) {
+        const force = (MOUSE_DIST - dist) / MOUSE_DIST * MOUSE_FORCE;
+        p.vx += (dx / dist) * force * 18;
+        p.vy += (dy / dist) * force * 18;
+      }
+
+      // Dampen velocity
+      p.vx *= 0.994;
+      p.vy *= 0.994;
+
+      p.x += p.vx;
+      p.y += p.vy;
+
+      // Wrap edges
+      if (p.x < 0) p.x = W;
+      if (p.x > W) p.x = 0;
+      if (p.y < 0) p.y = H;
+      if (p.y > H) p.y = 0;
+    });
+  }
+
+  function loop() {
+    update();
+    draw();
+    requestAnimationFrame(loop);
+  }
+
+  // Show canvas only when scrolled into the form area
+  function checkVisibility() {
+    const formEl   = document.getElementById('form-sections');
+    const footerEl = document.querySelector('.site-footer');
+    if (!formEl) return;
+    const formRect   = formEl.getBoundingClientRect();
+    const footerRect = footerEl ? footerEl.getBoundingClientRect() : null;
+    const formInView = formRect.top < window.innerHeight * 1.1 && formRect.bottom > -200;
+    const footerInView = footerRect ? footerRect.top < window.innerHeight : false;
+    canvas.classList.toggle('visible', formInView && !footerInView);
+  }
+
+  window.addEventListener('resize', resize);
+  window.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
+  window.addEventListener('mouseleave', () => { mouse.x = -9999; mouse.y = -9999; });
+  window.addEventListener('scroll', checkVisibility, { passive: true });
+
+  init();
+  loop();
+  checkVisibility();
+})();
 
 buildForm();
 </script>
