@@ -41,6 +41,76 @@ El resultado se clasifica en 4 niveles: **Etapa Inicial (0–24)**, **En Desarro
 
 ---
 
+## Cambios y mejoras recientes (frontend)
+
+Los siguientes cambios fueron aplicados al `public/index.html` respecto a la versión inicial:
+
+### Tipografía y tamaño de letra
+- Tamaño base del body aumentado (~2pt más grande en toda la página)
+- Todos los títulos, subtítulos, labels de sección y badges usan **Montserrat**
+- El cuerpo de texto, campos e inputs usan **Calibri**
+- Eliminadas las fuentes Syne y DM Sans
+
+### Visual general
+- Título principal del hero forzado a 2 líneas
+- Etiquetas "Por qué importa" e "Información del respondente" en color naranja
+- Mensaje de advertencia de preguntas obligatorias en amarillo con ícono SVG
+- Textos de tags de capacitaciones con mejor contraste sobre fondo oscuro
+- Etiquetas "En desacuerdo" / "De acuerdo" de la escala más grandes y visibles
+
+### Iconos
+- Todos los íconos emoji reemplazados por **SVGs simples color naranja** (contacto, pago, recomendaciones, diagnóstico)
+
+### Campo de cargo
+- Reemplazado de texto libre a **dropdown con 12 cargos** predefinidos del mercado
+
+### Estadísticas comparativas por cargo (nuevo bloque en resultados)
+- Aparece después de las recomendaciones y antes de las capacitaciones
+- Muestra el promedio del cargo y el top 20% según benchmarks 2026
+- Barras comparativas por dimensión: puntaje propio vs. promedio del cargo
+- Basado en datos de mercado para los 12 cargos del dropdown
+
+### Logo
+- Logo de la empresa embebido como **Base64** directamente en el HTML (no depende de servidor externo)
+- Aplicado `mix-blend-mode: screen` para que el fondo negro del PNG desaparezca sobre fondos oscuros
+
+### Correo electrónico
+- Reemplazados los correos ofuscados por Cloudflare por texto plano con enlace `mailto:`
+- Para evitar que Cloudflare vuelva a ofuscarlos: **Scrape Shield → Email Address Obfuscation → OFF**
+
+### Fondo animado (sección de preguntas)
+- Canvas con partículas y conexiones azules estilo cielo estrellado
+- Se activa con fade-in al llegar a la sección del formulario
+- Se oculta automáticamente antes del footer
+- Interactivo: el mouse repele suavemente las partículas
+
+### Panel de resultados (admin)
+- Botón **"Resultados"** en la cabecera, visible siempre
+- Login con usuario y contraseña (ver sección de credenciales más abajo)
+- Tabla con todos los diagnósticos: Nombre · Empresa · Cargo · Puntaje · Fecha · Botón PDF
+- Buscador en tiempo real por nombre, empresa o cargo
+- Botón de recarga de datos
+- **La sesión se cierra automáticamente** al cerrar el panel — siempre pide login al reabrir
+
+---
+
+## Panel de resultados — Credenciales
+
+El panel de administración está protegido por usuario y contraseña definidos directamente en el `index.html` (líneas `ADMIN_USER` y `ADMIN_PASS` dentro del bloque `// ═══ ADMIN PANEL ═══`).
+
+> **La contraseña del panel es la misma que la del servidor Robert-Prox.**  
+> Si necesitas recordarla, consúltala ahí directamente.  
+> **No escribas la contraseña en este archivo** — si el repo es público quedará expuesta.
+
+Para cambiarla, edita estas dos líneas en `public/index.html`:
+
+```javascript
+const ADMIN_USER = 'admin';
+const ADMIN_PASS = 'TuNuevaContraseña';
+```
+
+---
+
 ## Estructura del proyecto
 
 ```
@@ -53,7 +123,7 @@ madurez-digital/
 │   └── routes/
 │       ├── respuestas.js       ← API REST: guardar, listar, promedios
 │       └── pdf.js              ← Generación de PDF con Puppeteer
-├── .env                        ← Plantilla de variables de entorno
+├── .env                        ← Variables de entorno (nunca subir a GitHub)
 ├── nginx.conf                  ← Configuración de Nginx
 ├── package.json
 ├── setup.sh                    ← Script de instalación automática
@@ -213,6 +283,8 @@ server {
 
 > **Importante:** `proxy_buffering off` y `proxy_read_timeout 120s` son necesarios para que la generación del PDF no se interrumpa.
 
+> **Cloudflare:** Si usas Cloudflare como proxy, desactiva **Scrape Shield → Email Address Obfuscation** para que los correos del frontend se muestren correctamente.
+
 ---
 
 ## API REST
@@ -220,7 +292,7 @@ server {
 | Método | Ruta | Descripción |
 |--------|------|-------------|
 | `POST` | `/api/respuestas` | Guarda una respuesta completa del cuestionario |
-| `GET`  | `/api/respuestas` | Lista todas las respuestas (uso interno/admin) |
+| `GET`  | `/api/respuestas` | Lista todas las respuestas (panel admin) |
 | `GET`  | `/api/respuestas/promedios` | Promedios globales por sección |
 | `POST` | `/api/pdf` | Genera y descarga el reporte PDF de resultados |
 | `GET`  | `/api/health` | Verifica que el servidor está activo |
@@ -258,6 +330,9 @@ pm2 logs madurez-digital
 # Reiniciar la app tras cambios en el backend
 pm2 restart madurez-digital
 
+# Actualizar solo el frontend (sin reiniciar el backend)
+sudo cp index.html /var/www/madurez-digital/index.html
+
 # Limpiar logs acumulados
 pm2 flush madurez-digital
 
@@ -291,3 +366,5 @@ sudo -u postgres psql -d madurez_digital \
 - La zona horaria de la base de datos está configurada en `America/Bogota`.
 - El PDF se genera con `puppeteer-core` apuntando a Google Chrome instalado en `/usr/bin/google-chrome`. Si Chrome cambia de ruta, actualizar `executablePath` en `src/routes/pdf.js`.
 - `proxy_buffering off` en Nginx es obligatorio para que el PDF se descargue correctamente.
+- El logo está embebido como Base64 en el HTML — si cambia el logo, reemplazar la cadena Base64 directamente en `index.html`.
+- La contraseña del panel de resultados **no está en este archivo** por seguridad. Ver sección "Panel de resultados — Credenciales".
